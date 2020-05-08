@@ -1,0 +1,25 @@
+{
+  "name": "bundleclothes-ecommerce-backend",
+  "version": "1.0.0",
+  "description": "Tugas besar pemrograman web lanjut",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtfiqh/bundleClothes-ecommerce-backend.git"
+  },
+  "keywords": [
+    "restful",
+    "api",
+    "json",
+    "ecommerce"
+  ],
+  "author": "Muhammad Taufiq Hidayat (mtfiqh)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mtfiqh/bundleClothes-ecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/mtfiqh/bundleClothes-ecommerce-backend#readme"
+}
