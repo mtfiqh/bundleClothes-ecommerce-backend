@@ -22,3 +22,19 @@ exports.User = new Schema({
         unique:true
     }
 })
+
+exports.Admin = new Schema({
+    username:{
+        type:String,
+        unique:true
+    },
+    password:String,
+    name:String,
+    avatar:String,
+    created_at: Date,
+    updated_at: Date,
+    token:{
+        type:String,
+        unique:true
+    }
+})
