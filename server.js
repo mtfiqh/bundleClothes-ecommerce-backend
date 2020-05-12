@@ -22,6 +22,7 @@ const prefix = '/api/v1'
 // route
 app.use(prefix+'/', require('./Routers/TestRouter'))
 app.use(prefix+'/user', require('./Routers/UserRouter'))
+app.use(prefix+'/admin', require('./Routers/AdminRouter'))
 
 // listen
 app.listen(3000, ()=>{

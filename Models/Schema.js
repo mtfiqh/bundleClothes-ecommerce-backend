@@ -19,7 +19,7 @@ exports.User = new Schema({
     updated_at: Date,
     token:{
         type:String,
-        unique:true
+        // unique:true
     }
 })
 
@@ -35,6 +35,6 @@ exports.Admin = new Schema({
     updated_at: Date,
     token:{
         type:String,
-        unique:true
+        // unique:true
     }
 })

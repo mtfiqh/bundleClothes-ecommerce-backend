@@ -1,17 +1,16 @@
 const {resHelper} = require('../Helpers/ResponseHelper')
 const bcrypt = require('bcrypt')
-const User = new require('../Models/User')
-const user = new User()
+const admin = new (require('../Models/Admin'))()
 const { v4: uuidv4 } = require('uuid');
 
-module.exports = class User{
+module.exports = class Admin{
     async create(req, res){
-        const email = req.body.email
-        const name = req.body.name
+        const username = req.body.username
         let password = req.body.password
+        const name = req.body.name
         let data={}
         data['errors']={}
-        if(email==undefined) data['errors']['email'] ="required"
+        if(username==undefined) data['errors']['username'] ="required"
         if(password==undefined) data['errors']['password'] ="required"
         if(name==undefined) data['errors']['name'] ="required"
         if(Object.keys(data.errors).length>0) return res.send(resHelper(data,"Missing required parameters"),400)
@@ -19,42 +18,41 @@ module.exports = class User{
         // encrypt
         password = await bcrypt.hash(password, 10)
 
-        const id = uuidv4()
         // save to db
-        const insert = await user.insert({
-            email:email,
+        const insert = await admin.insert({
             name:name,
+            username:username,
             password:password,
             created_at: new Date(),
             updated_at: new Date()
         })
 
-        if(insert==200) return res.status(201).send(resHelper({}, "User created"))
-        return res.status(400).send(resHelper({'data':insert}, "Failed to registered user, maybe email already used"))
+        if(insert==200) return res.status(201).send(resHelper({}, "Admin created"))
+        return res.status(400).send(resHelper({'data':insert}, "Failed to registered admin, maybe username already used"))
     }
 
     async login(req,res){
         let payload={}
-        payload.email = req.body.email
+        payload.email = req.body.username
         payload.password = req.body.password
         let data={}
         data['errors']={}
-        if(payload.email==undefined) data['errors']['email'] ="required"
+        if(payload.email==undefined) data['errors']['username'] ="required"
         if(payload.password==undefined) data['errors']['password'] ="required"
         if(Object.keys(data.errors).length>0) return res.send(resHelper(data,"Missing required parameters"),400)
         
-        let userData = await user.get({email:payload.email}, 'findOne')
-        userData = userData[0]
-        if(userData==undefined) return res.status(400).send(resHelper({}, "Email or password is wrong"))
+        let adminData = await admin.get({username:payload.email}, 'findOne')
+        adminData = adminData[0]
+        if(adminData==undefined) return res.status(400).send(resHelper({}, "Email or password is wrong"))
         
-        let passwordEncrypt = userData.password
+        let passwordEncrypt = adminData.password
         const match = await bcrypt.compare(payload.password, passwordEncrypt)
         
         if(!match) return res.status(400).send(resHelper({}, "Email or password is wrong"))
         let token = uuidv4()
-        const insToken = await user.update({_id:userData._id},{token: token})
-        userData.token = token
+        const insToken = await admin.update({_id:adminData._id},{token: token})
+        adminData.token = token
         
-        return res.status(200).send(resHelper(userData, "Logged"))
+        return res.status(200).send(resHelper(adminData, "Logged"))
     }
 }

@@ -90,7 +90,7 @@ class Model{
             return 200
         }).catch(e=>{
             // Logger.error(this.constructor.name,e.message)
-            return e.code
+            return e
         })
     }
 

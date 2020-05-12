@@ -1,6 +1,6 @@
 const Model = require('./Model')
 
-module.exports = class User extends Model{
+module.exports = class Admin extends Model{
     constructor(){
         super()
     }
