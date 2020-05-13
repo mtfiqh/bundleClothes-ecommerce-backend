@@ -55,4 +55,8 @@ module.exports = class Admin{
         
         return res.status(200).send(resHelper(adminData, "Logged"))
     }
+
+    async logout(req, res){
+        res.send('yes')
+    }
 }
