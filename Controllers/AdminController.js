@@ -57,6 +57,7 @@ module.exports = class Admin{
     }
 
     async logout(req, res){
-        res.send('yes')
+        let data = await admin.update({_id:req.body.id}, {token:null})
+        return res.send(resHelper({}, "Logout"), 200)
     }
 }

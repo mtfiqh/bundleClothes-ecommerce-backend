@@ -7,6 +7,7 @@ module.exports = class AdminMiddleware{
         data=data[0]
         if(!data) return res.send(resHelper({}, "Token Invalid"), 403)
         if(token==data.token){
+            req.body.id = data._id
             return next()
         }
         return res.send(resHelper({}, "Token Invalid"), 403)
