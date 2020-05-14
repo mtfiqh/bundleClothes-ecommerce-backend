@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 
 // define object
 const app = express()
-
+app.use(express.static('./public'))
 // use
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))

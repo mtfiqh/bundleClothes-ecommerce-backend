@@ -1,20 +1,39 @@
 const model = new (require('../Models/Product'))()
 const {resHelper} = require('../Helpers/ResponseHelper')
 const fs = require('fs')
-
 module.exports = class Product{
 
     async index(req,res){
+        let url = req.protocol+'://'+req.get('host')+'/'
         let data = await model.get()
         if(Object.keys(data).length<1) return res.send(resHelper({}, "Product Empty"),404)
+        let i=0, j=0
+        data.forEach(d=>{
+            if(Object.keys(d.images).length>0){
+                j=0
+                d.images.forEach(img=>{
+                    data[i].images[j] = url+img
+                    j++
+                })
+            }
+            i++
+        })
         return res.send(resHelper(data, "All products fetched"),200)
     }
     async read(req, res){
+        let url = req.protocol+'://'+req.get('host')+'/'
         const id = req.params.id
         if(id === undefined) return res.status(400).send(resHelper({"errors":{"id":"required"}}, "Missing params"))
         let data = await model.get({_id:id})
         if(data===404) return res.status(404).send(resHelper({}, "Not found"))
         data = data[0]
+        if(Object.keys(data.images).length>0){
+            let i = 0
+            data.images.forEach(img=>{
+                data.images[i] = url+img
+                i++
+            })
+        }
         res.status(200).send(resHelper(data, "Product fetched"))
     }
     async create(req, res){
