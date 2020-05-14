@@ -27,7 +27,10 @@ class Model{
      * @returns {Promise}
      */
     async get(condition={},type='findAll',field='',sort=null,limit=null){
-        var result = await this[this.constructor.name].find(condition,field).sort(sort==null?{}:sort).limit(limit==null?0:limit)
+        
+        var result = await this[this.constructor.name].find(condition,field).sort(sort==null?{}:sort).limit(limit==null?0:limit).catch(e=>{
+            return 404
+        })
         return result        
     }
 

@@ -60,4 +60,9 @@ module.exports = class Admin{
         let data = await admin.update({_id:req.body.id}, {token:null})
         return res.send(resHelper({}, "Logout"), 200)
     }
+
+    async self(req,res){
+        let data = await admin.get({_id:req.body.id})
+        return res.status(200).send(resHelper(data, "Admin data fetched"))
+    }
 }
