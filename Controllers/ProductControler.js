@@ -21,7 +21,7 @@ module.exports = class Product{
         let data = {}
         let images={}
         data.errors= {}
-        req.body.name ? payload.name = req.body.name : data.errors.name = "required"
+        req.body.title ? payload.title = req.body.title : data.errors.title = "required"
         req.files  ? (req.files.length>0 ? images = req.files : data.errors.files = "required") : data.errors.files = "required"
         
         if(Object.keys(data.errors).length>0) return res.send(resHelper(data, "Missing required parameters"), 400)
@@ -39,16 +39,19 @@ module.exports = class Product{
         let data = await model.get({_id:id})
         if(data===404) return res.status(404).send(resHelper({}, "Not found"))
         let payload = {}
-        let images = {}
-        req.body.name ? payload.name = req.body.name : ''
+        let images = []
+        req.body.title ? payload.title = req.body.title : ''
         req.files ? (req.files.length>0 ? images = req.files : '') : ''
-        if(images.length<1 && req.body.name===undefined) return res.status(400).send(resHelper({}, "Missing required parameters"))
+        console.log('title', req.body.title, 'images length', images.length)
+        if(images.length<1 && req.body.title===undefined) return res.status(400).send(resHelper({}, "Missing required parameters"))
         if(images.length>0){
             payload.images=[]
             images.forEach(file => {
                 payload.images.push('products/'+file.filename)
             });
         }
-        
+        await model.update({_id:id}, payload, 'updateOne')
+        data = await model.get({_id:id})
+        return res.status(200).send(resHelper(data, "Updated"))
     }
 }
