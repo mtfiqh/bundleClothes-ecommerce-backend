@@ -38,3 +38,16 @@ exports.Admin = new Schema({
         // unique:true
     }
 })
+
+exports.Product = new Schema({
+    title:String,
+    rating:{
+        type:Number,
+        default:0
+    },
+    image:[String],
+    sold:{
+        type:Number,
+        default:0
+    }
+})
