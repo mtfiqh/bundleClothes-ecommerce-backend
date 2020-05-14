@@ -45,7 +45,7 @@ exports.Product = new Schema({
         type:Number,
         default:0
     },
-    image:[String],
+    images:[String],
     sold:{
         type:Number,
         default:0

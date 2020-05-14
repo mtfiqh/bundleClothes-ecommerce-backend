@@ -87,7 +87,7 @@ class Model{
     async insert(payload){
         this.obj = new this[this.constructor.name](payload)
         return this.obj.save().then(e=>{
-            return 200
+            return e
         }).catch(e=>{
             // Logger.error(this.constructor.name,e.message)
             return e
