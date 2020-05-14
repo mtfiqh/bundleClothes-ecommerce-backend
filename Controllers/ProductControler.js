@@ -1,5 +1,6 @@
 const model = new (require('../Models/Product'))()
 const {resHelper} = require('../Helpers/ResponseHelper')
+const fs = require('fs')
 
 module.exports = class Product{
 
@@ -52,6 +53,20 @@ module.exports = class Product{
         }
         await model.update({_id:id}, payload, 'updateOne')
         data = await model.get({_id:id})
+        data=data[0]
         return res.status(200).send(resHelper(data, "Updated"))
+    }
+
+    async delete(req, res){
+        const id = req.params.id
+        if(id === undefined) return res.status(400).send(resHelper({"errors":{"id":"required"}}, "Missing params"))
+        let data = await model.get({_id:id})
+        if(data===404) return res.status(404).send(resHelper({}, "Not found"))
+        data=data[0]
+        data.images.forEach(image =>{
+            fs.unlinkSync('public/'+image)
+        })
+        await model.delete({_id:id})
+        return res.status(200).send(resHelper({}, "Deleted"))
     }
 }
