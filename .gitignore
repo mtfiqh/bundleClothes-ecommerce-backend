@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # product images
-public/products
+public/products/*
