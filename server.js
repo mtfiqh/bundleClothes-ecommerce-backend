@@ -29,6 +29,7 @@ app.use(prefix+'/', require('./Routers/TestRouter'))
 app.use(prefix+'/user', require('./Routers/UserRouter'))
 app.use(prefix+'/admin', require('./Routers/AdminRouter'))
 app.use(prefix+'/admin/product', require('./Routers/ProductRouter'))
+app.use(prefix+'/product', require('./Routers/ProductRouter'))
 
 // listen
 app.listen(3000, ()=>{
