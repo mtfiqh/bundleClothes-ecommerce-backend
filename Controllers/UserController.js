@@ -57,4 +57,17 @@ module.exports = class User{
         
         return res.status(200).send(resHelper(userData, "Logged"))
     }
+
+    async self(req,res){
+        let id = req.body.id
+        let userData = await user.get({_id:id})
+        userData = userData[0]
+        res.status(200).send(resHelper(userData, "Get self data"))
+    }
+
+    async logout(req,res){
+        let id = req.body.id
+        let update = await user.update({_id:id}, {token:null})
+        res.status(200).send(resHelper({}, "Logout"))
+    }
 }

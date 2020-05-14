@@ -51,3 +51,8 @@ exports.Product = new Schema({
         default:0
     }
 })
+
+exports.Cart = new Schema({
+    user_id:String,
+    products_id:[String]
+})
