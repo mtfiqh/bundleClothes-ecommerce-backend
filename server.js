@@ -26,10 +26,12 @@ app.use(prefix+'/pull', async (req,res)=>{
     res.status(200).send(x)
 })
 app.use(prefix+'/', require('./Routers/TestRouter'))
+app.use(prefix+'/product', require('./Routers/ProductRouter'))
 app.use(prefix+'/user', require('./Routers/UserRouter'))
+app.use(prefix+'/user/cart', require('./Routers/CartRouter'))
+
 app.use(prefix+'/admin', require('./Routers/AdminRouter'))
 app.use(prefix+'/admin/product', require('./Routers/ProductRouter'))
-app.use(prefix+'/product', require('./Routers/ProductRouter'))
 
 // listen
 app.listen(3000, ()=>{
