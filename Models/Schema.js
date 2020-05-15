@@ -56,3 +56,11 @@ exports.Cart = new Schema({
     user_id:String,
     products_id:[String]
 })
+
+exports.Address = new Schema({
+    user_id:String,
+    address:String,
+    postal_code:Number,
+    recipient:String,
+    phone_number:String
+})
