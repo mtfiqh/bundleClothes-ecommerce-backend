@@ -6,4 +6,5 @@ const {checkToken} = new (require('../middleware/UserMiddleware'))()
 // route.post('/', obj.index)
 route.get('/self', checkToken ,obj.self)
 route.post('/', checkToken ,obj.create)
+route.put('/:address_id', checkToken ,obj.update)
 module.exports = route

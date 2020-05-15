@@ -15,6 +15,7 @@ module.exports = class Address{
         req.body.postal_code ? temp.postal_code = req.body.postal_code : data.errors.postal_code="required"
         req.body.recipient ? temp.recipient = req.body.recipient : data.errors.recipient = "required"
         req.body.phone_number ? temp.phone_number = req.body.phone_number : data.errors.phone_number = "required"
+        temp.id=Math.random().toString(36).substring(5)
         payload.address.push(temp)
 
         if(Object.keys(data.errors).length>0) return res.status(400).send(resHelper(data, "Missing required parameters"))
@@ -28,6 +29,7 @@ module.exports = class Address{
         // console.log('address', address)
         address.address.forEach(x=>{
             temp = {
+                id:x.id ? x.id : Math.random().toString(36).substring(5),
                 address:x.address,
                 postal_code:x.postal_code,
                 recipient:x.recipient,
@@ -42,9 +44,36 @@ module.exports = class Address{
         return res.status(201).send(resHelper(address, "Address inserted"))
     }
     async update(req, res){
-
+        let payload = {}
+        let data = {errors:{}}
+        let temp = {}
+        const user_id = req.body.id
+        payload.address = []
+        let address_id = req.params.address_id
+        if(address_id === undefined) return res.status(400).send(resHelper({}, "address_id not provided"))
+        if(req.body.address===undefined && req.body.postal_code===undefined && req.body.recipient === undefined && req.body.phone_number === undefined){
+            return res.status(400).send(resHelper({}, "Missing required parameters"))
+        }
+        let addresses = await model.get({user_id:user_id})
+        let address = addresses[0]
+        let found = false
+        address.address.forEach(e=>{
+            if(e.id == address_id){
+                e.address = req.body.address ? req.body.address : e.address
+                e.postal_code = req.body.postal_code ? req.body.postal_code : e.postal_code
+                e.recipient = req.body.recipient ? req.body.recipient : e.recipient
+                e.phone_number = req.body.phone_number ? req.body.phone_number : e.phone_number
+                found=true
+            }
+            payload.address.push(e)
+        })
+        if(!found) return res.status(404).send(resHelper({}, "address_id not found"))
+        await model.update({_id:address._id}, {address:payload.address})
+        address = (await model.get({user_id:user_id}))[0]
+        return res.status(200).send(resHelper(address, "Updated"))
     }
     async delete(req, res){
+
     }
     async read(req, res){
 
