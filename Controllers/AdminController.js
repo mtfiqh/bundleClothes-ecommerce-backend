@@ -63,6 +63,6 @@ module.exports = class Admin{
 
     async self(req,res){
         let data = await admin.get({_id:req.body.id})
-        return res.status(200).send(resHelper(data, "Admin data fetched"))
+        return res.status(200).send(resHelper(data[0], "Admin data fetched"))
     }
 }

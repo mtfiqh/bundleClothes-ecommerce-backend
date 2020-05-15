@@ -5,4 +5,5 @@ const obj = new controller()
 const {checkToken} = new (require('../middleware/UserMiddleware'))()
 // route.post('/', obj.index)
 route.get('/self', checkToken ,obj.self)
+route.post('/', checkToken ,obj.create)
 module.exports = route

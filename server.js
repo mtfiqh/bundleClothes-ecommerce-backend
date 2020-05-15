@@ -35,6 +35,7 @@ app.use(prefix+'/', require('./Routers/TestRouter'))
 app.use(prefix+'/product', require('./Routers/ProductRouter'))
 app.use(prefix+'/user', require('./Routers/UserRouter'))
 app.use(prefix+'/user/cart', require('./Routers/CartRouter'))
+app.use(prefix+'/user/address', require('./Routers/AddressRouter'))
 
 app.use(prefix+'/admin', require('./Routers/AdminRouter'))
 app.use(prefix+'/admin/product', require('./Routers/ProductRouter'))

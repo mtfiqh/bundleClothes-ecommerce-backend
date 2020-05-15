@@ -59,8 +59,9 @@ exports.Cart = new Schema({
 
 exports.Address = new Schema({
     user_id:String,
-    address:String,
-    postal_code:Number,
-    recipient:String,
-    phone_number:String
+    address:[Object]
+    // address:String,
+    // postal_code:Number,
+    // recipient:String,
+    // phone_number:String
 })
