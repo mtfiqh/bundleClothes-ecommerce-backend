@@ -113,7 +113,25 @@ module.exports = class Order{
     }
 
     async onProcess(req, res){
+        let data = await model.get({})
+        let send = []
+        for(let d of data){
+            if(d.status.code<5){
+                send.push(d)
+            }
+        }
+        return res.status(200).send(resHelper(send, "All user orders on process fetched"))
+    }
 
+    async onComplete(req, res){
+        let data = await model.get({})
+        let send = []
+        for(let d of data){
+            if(d.status.code==5){
+                send.push(d)
+            }
+        }
+        return res.status(200).send(resHelper(send, "All user orders on process fetched"))
     }
     
 }
