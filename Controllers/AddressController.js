@@ -73,10 +73,52 @@ module.exports = class Address{
         return res.status(200).send(resHelper(address, "Updated"))
     }
     async delete(req, res){
-
+        let user_id = req.body.id
+        let address_id = req.params.address_id
+        let data = await model.get({user_id:user_id})
+        if(Object.keys(data).length<1){
+            await model.insert({user_id:id})
+            return res.status(404).send(resHelper({}, "Address of this user not found"))
+        }
+        data=data[0]
+        let found=false
+        let temp = {}
+        let payload = {}
+        payload.address = []
+        data.address.forEach(addr => {
+            if(addr.id == address_id){
+                found = true
+            }else{
+                payload.address.push(addr)
+            }
+        })
+        if(!found) return res.status(404).send(resHelper({},"No address of this user found"))
+        await model.update({user_id:user_id},{address: payload.address})
+        data = await model.get({user_id:user_id})
+        return res.status(200).send(resHelper(data[0], "deleted"))
     }
     async read(req, res){
-
+        let user_id = req.body.id
+        let address_id = req.params.address_id
+        let data = await model.get({user_id:user_id})
+        if(Object.keys(data).length<1){
+            await model.insert({user_id:id})
+            return res.status(404).send(resHelper({}, "Address of this user not found"))
+        }
+        data=data[0]
+        let found=false
+        let temp = {}
+        let payload = {}
+        payload.address = {}
+        data.address.forEach(addr => {
+            if(addr.id == address_id){
+                found = true
+                payload.address = addr
+                // break
+            }
+        })
+        if(!found) return res.status(404).send(resHelper({}, "not found"))
+        return res.status(200).send(resHelper(payload.address, "Data fetched"))
     }
     async self(req, res){
         const id = req.body.id
