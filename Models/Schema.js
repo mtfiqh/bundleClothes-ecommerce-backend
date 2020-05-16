@@ -49,6 +49,10 @@ exports.Product = new Schema({
     sold:{
         type:Number,
         default:0
+    },
+    reviewer:{
+        type:Number,
+        default:0
     }
 })
 
@@ -64,4 +68,11 @@ exports.Address = new Schema({
     // postal_code:Number,
     // recipient:String,
     // phone_number:String
+})
+
+exports.Order = new Schema({
+    user_id:String,
+    delivery_address:Object,
+    status:Object,
+    products:[Object]
 })
