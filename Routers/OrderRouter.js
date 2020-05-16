@@ -8,4 +8,5 @@ route.post('/', checkToken ,obj.create)
 route.get('/self', checkToken ,obj.self)
 route.get('/self/process', checkToken ,obj.selfOnProcess)
 route.get('/self/complete', checkToken ,obj.selfOnComplete)
+route.post('/self/complete', checkToken ,obj.setToCompleteUserSide)
 module.exports = route

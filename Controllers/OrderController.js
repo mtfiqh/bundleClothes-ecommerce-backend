@@ -88,6 +88,17 @@ module.exports = class Order{
         return res.status(200).send(resHelper(send, "All user orders on complete fetched"))
     }
     
+    async setToCompleteUserSide(req, res){
+        const user_id = req.body.id
+        let order_id = req.body.order_id
+        let data = await model.get({user_id:user_id, _id:order_id})
+        // console.log('data', data)
+        if(data.length<1) return res.status(404).send(resHelper({}, "not found"))
+        await model.update({user_id:user_id, _id:order_id}, {status:{detail:"Completed", code:5}})
+        data = await model.get({user_id:user_id, _id:order_id})
+        data = data[0]
+        return res.status(200).send(resHelper(data, "Set to completed"))
+    }
 }
 
 
