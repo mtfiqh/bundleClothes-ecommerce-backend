@@ -20,7 +20,9 @@ exports.User = new Schema({
     token:{
         type:String,
         // unique:true
-    }
+    },
+    sex:String,
+    phone_number:String
 })
 
 exports.Admin = new Schema({

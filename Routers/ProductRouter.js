@@ -22,8 +22,8 @@ const upload = multer({
 
 route.post('/', upload.array('images', 4), checkToken, obj.create)
 route.get('/', obj.index)
+route.get('/search/:q', obj.search)
 route.get('/:id', obj.read)
 route.put('/:id', upload.array('images', 4), checkToken,obj.update)
 route.delete('/:id', checkToken, obj.delete)
-
 module.exports = route

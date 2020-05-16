@@ -88,4 +88,13 @@ module.exports = class Product{
         await model.delete({_id:id})
         return res.status(200).send(resHelper({}, "Deleted"))
     }
+
+    async search(req, res){
+        const q = req.params.q
+        // const query = '/'+q+'/'
+        // console.log(reg)
+        let data = await model.get({title: {$regex: new RegExp('.*' + q.toLowerCase() + '.*')}})
+        console.log('data', data)
+        return res.status(200).send(resHelper(data, "fetched"))
+    }
 }

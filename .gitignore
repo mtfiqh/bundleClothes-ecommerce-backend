@@ -105,3 +105,4 @@ dist
 
 # product images
 public/products/*
+public/users/*

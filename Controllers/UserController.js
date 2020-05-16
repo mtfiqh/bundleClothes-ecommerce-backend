@@ -70,4 +70,29 @@ module.exports = class User{
         let update = await user.update({_id:id}, {token:null})
         res.status(200).send(resHelper({}, "Logout"))
     }
+
+    async update(req, res){
+        let user_id = req.body.id
+        let payload = {}
+        let error = {}
+        req.files  ? (req.files.length>0 ? payload.avatar = req.files :'') : ''
+        req.body.name ? payload.name = req.body.name : ''
+        req.body.email ? payload.email = req.body.email : ''
+        req.body.sex ? payload.sex = req.body.sex : ''
+        req.body.phone_number ? payload.phone_number = req.body.phone_number : ''
+        req.body.new_password ? payload.password = await bcrypt.hash(req.body.new_password, 10) : ''
+        req.body.current_password ? payload.current_password = req.body.current_password : error.current_password = 'required'
+        if(error.current_password) return res.status(400).send(resHelper(error, "wrong password"))
+        let data = await user.get({_id:user_id})
+        console.log('data', data)
+        data = data[0]
+        const match = await bcrypt.compare(payload.current_password, data.password)
+        if(!match) return res.status(400).send(resHelper({}, "Password is wrong"))
+        await user.update({_id:user_id}, payload)
+        data = await user.get({_id:user_id})
+        data = data[0]
+        return res.status(200).send(resHelper(data, "update success"))
+        
+        
+    }
 }
