@@ -2,6 +2,7 @@
 const {resHelper} = require('../Helpers/ResponseHelper')
 const model = new (require('../Models/Order'))()
 const productModel = new (require('../Models/Product'))()
+const cartModel = new (require('../Models/Cart'))()
 module.exports = class Order{
 
     async create(req,res){
@@ -12,7 +13,7 @@ module.exports = class Order{
         payload.products = []
         let notfound=[]
         if(products_id!=undefined){
-            console.log('length', products_id.length)
+            // console.log('length', products_id.length)
             if(products_id.length==3 || products_id.length==6){}else return res.status(400).send(resHelper({}, "products_id, not 3 or 6"))
             let id
             // console.log('products_id', products_id)
@@ -37,8 +38,18 @@ module.exports = class Order{
                 }
                 payload.products.push(tmp)
             }
+
+            let temp = await cartModel.get({user_id:user_id})
+            let list = temp[0].products_id
+            for(id of products_id){
+                let index = list.indexOf(id);
+                if (index > -1) {
+                    list.splice(index, 1);
+                }
+            }
+            await cartModel.update({user_id:user_id}, {products_id:list})
         }
-        console.log('out')
+        // console.log('out')
         if(notfound.length>0) return res.status(404).send(resHelper({notfound}, "product_id not found"))
 
         payload.delivery_address = {
