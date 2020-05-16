@@ -145,6 +145,25 @@ module.exports = class Order{
         return res.status(200).send(resHelper(send, "All user orders on process fetched"))
     }
     
+    async changeToDelivery(req, res){
+        let order_id = req.body.order_id
+        let data = await model.get({_id:order_id})
+        // console.log('data', data)
+        if(data.length<1) return res.status(404).send(resHelper({}, "not found"))
+        await model.update({_id:order_id}, {status:{detail:"Delivering", code:3}})
+        data = (await model.get({_id:order_id}))[0]
+        return res.status(200).send(resHelper(data, "Set to delivering"))
+    }
+
+    async changeToArrived(req, res){
+        let order_id = req.body.order_id
+        let data = await model.get({_id:order_id})
+        // console.log('data', data)
+        if(data.length<1) return res.status(404).send(resHelper({}, "not found"))
+        await model.update({_id:order_id}, {status:{detail:"arrived", code:4}})
+        data = (await model.get({_id:order_id}))[0]
+        return res.status(200).send(resHelper(data, "Set to arrived"))
+    }
 }
 
 

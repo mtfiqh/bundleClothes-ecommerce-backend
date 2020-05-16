@@ -15,5 +15,6 @@ route.post('/self/complete', checkToken ,obj.setToCompleteUserSide)
 route.get('/', adminToken, obj.index)
 route.get('/process', adminToken, obj.onProcess)
 route.get('/complete', adminToken, obj.onComplete)
-
+route.post('/setdelivery', adminToken, obj.changeToDelivery)
+route.post('/setarrived', adminToken, obj.changeToArrived)
 module.exports = route
