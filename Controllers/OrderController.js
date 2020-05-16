@@ -22,13 +22,20 @@ module.exports = class Order{
                 let temp = await productModel.get({_id:id})
                 temp=temp[0]
                 console.log('temp',temp.sold+1)
+                temp.reviewed = false
                 await productModel.update({_id:id}, {sold:temp.sold+1})
                 // console.log('temp length', temp)
                 if(temp.length<1 || temp == 404){
                     // console.log('in')
                     notfound.push(id)
                 }
-                payload.products.push(temp)
+                let tmp = {
+                    images:temp.images,
+                    _id:temp._id,
+                    rating:0,
+                    title:temp.title
+                }
+                payload.products.push(tmp)
             }
         }
         console.log('out')
@@ -99,6 +106,16 @@ module.exports = class Order{
         data = data[0]
         return res.status(200).send(resHelper(data, "Set to completed"))
     }
+    // admin
+    async index(req, res){
+        let data = await model.get({})
+        return res.status(200).send(resHelper(data, "All orders fetched"))
+    }
+
+    async onProcess(req, res){
+
+    }
+    
 }
 
 
