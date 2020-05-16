@@ -28,9 +28,9 @@ module.exports = class User{
             created_at: new Date(),
             updated_at: new Date()
         })
-
-        if(insert==200) return res.status(201).send(resHelper({}, "User created"))
-        return res.status(400).send(resHelper({'data':insert}, "Failed to registered user, maybe email already used"))
+        console.log('ins', Object.keys(insert).length)
+        if(insert._id!=undefined) return res.status(201).send(resHelper({}, "User created"))
+        return res.status(400).send(resHelper({}, "Failed to registered user, maybe email already used"))
     }
 
     async login(req,res){
