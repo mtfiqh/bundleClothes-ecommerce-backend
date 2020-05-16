@@ -34,7 +34,8 @@ module.exports = class Order{
                     images:temp.images,
                     _id:temp._id,
                     rating:0,
-                    title:temp.title
+                    title:temp.title,
+                    reviewed:false
                 }
                 payload.products.push(tmp)
             }
