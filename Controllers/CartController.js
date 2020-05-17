@@ -46,7 +46,7 @@ module.exports = class Cart{
     async min(req, res){
         let payload={user_id:req.body.id}
         let data = {}
-        req.body.product_id ? payload.product_id = req.body.product_id : data.errors = {product_id:"required"}
+        req.params.product_id ? payload.product_id = req.params.product_id : data.errors = {product_id:"required"}
         let prod = await product.get({_id:payload.product_id})
         if(Object.keys(data).length>0) return res.status(400).send(resHelper(data, "Missing required parameters"))
         if(Object.keys(prod).length<1) return res.status(404).send(resHelper({}, "Product id not found"))

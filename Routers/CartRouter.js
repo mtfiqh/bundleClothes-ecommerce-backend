@@ -4,6 +4,6 @@ const controller = require('../Controllers/CartController')
 const obj = new controller()
 
 route.post('/', checkToken, obj.add)
-route.delete('/', checkToken, obj.min)
+route.delete('/:product_id', checkToken, obj.min)
 route.get('/', checkToken, obj.self)
 module.exports = route
