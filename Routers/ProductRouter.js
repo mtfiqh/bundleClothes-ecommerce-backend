@@ -1,11 +1,12 @@
 const route = require('express').Router()
-const {checkToken} =new (require('../middleware/UserMiddleware'))()
-const controller = require('../Controllers/UserController')
+
+const controller = require('../Controllers/ProductControler')
 const obj = new controller()
+const {checkToken} = new (require('../middleware/AdminMiddleware'))()
 
 const multer = require('multer')
 const storage = multer.diskStorage({
-    destination:'./public/users',
+    destination:'./public/products',
     filename:function(req, file, cb){
         cb(null, Date.now().toString() + '_' + file.originalname)
     }
@@ -19,10 +20,10 @@ const upload = multer({
     }
 })
 
-
-route.post('/', obj.create)
-route.post('/login', obj.login)
-route.get('/self', checkToken ,obj.self)
-route.post('/logout', checkToken ,obj.logout)
-route.put('/self', checkToken, upload.single('avatar'), obj.update)
+route.post('/', upload.array('images', 4), checkToken, obj.create)
+route.get('/', obj.index)
+route.get('/search/:q', obj.search)
+route.get('/:id', obj.read)
+route.put('/:id', upload.array('images', 4), checkToken,obj.update)
+route.delete('/:id', checkToken, obj.delete)
 module.exports = route

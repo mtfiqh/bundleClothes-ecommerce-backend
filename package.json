@@ -25,9 +25,14 @@
   "homepage": "https://github.com/mtfiqh/bundleClothes-ecommerce-backend#readme",
   "dependencies": {
     "bcrypt": "^4.0.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "formidable": "^1.2.2",
+    "fs": "0.0.1-security",
     "mongoose": "^5.9.13",
+    "multer": "^1.4.2",
+    "simple-git": "^2.4.0",
     "uuid": "^8.0.0"
   },
   "devDependencies": {

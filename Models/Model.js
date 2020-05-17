@@ -27,7 +27,10 @@ class Model{
      * @returns {Promise}
      */
     async get(condition={},type='findAll',field='',sort=null,limit=null){
-        var result = await this[this.constructor.name].find(condition,field).sort(sort==null?{}:sort).limit(limit==null?0:limit)
+        
+        var result = await this[this.constructor.name].find(condition,field).sort(sort==null?{}:sort).limit(limit==null?0:limit).catch(e=>{
+            return 404
+        })
         return result        
     }
 
@@ -87,10 +90,10 @@ class Model{
     async insert(payload){
         this.obj = new this[this.constructor.name](payload)
         return this.obj.save().then(e=>{
-            return 200
+            return e
         }).catch(e=>{
             // Logger.error(this.constructor.name,e.message)
-            return e.code
+            return e
         })
     }
 
