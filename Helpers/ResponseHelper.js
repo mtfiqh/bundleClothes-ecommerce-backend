@@ -9,12 +9,12 @@ exports.resHelper = (data, message)=>{
                 nim:"14116162"
             },
             {
-                name:"Isnedi Chandra Kusuma",
-                nim:"14116"
+                name:"Isnedi Candra Kusuma",
+                nim:"14116136"
             },
             {
-                name:"Aditya Ricky",
-                nim:"14116"
+                name:"Aditya Ricky Pratama",
+                nim:"14116142"
             }
         ]
     }

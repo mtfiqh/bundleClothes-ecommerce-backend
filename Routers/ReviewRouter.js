@@ -4,5 +4,5 @@ const controller = require('../Controllers/ReviewController')
 const obj = new controller()
 
 route.get('/', checkToken ,obj.index)
-
+route.post('/', checkToken, obj.rate)
 module.exports = route
